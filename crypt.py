@@ -73,11 +73,24 @@ def decrypt_file(filename):
 
 # Main function to handle argparse commands
 def main():
-    parser = argparse.ArgumentParser(description="Encrypt or decrypt files.")
+    parser = argparse.ArgumentParser(
+        description="Encrypt or decrypt files.",
+        usage="python3 crypt.py {encrypt|decrypt} filename")
     parser.add_argument("action", choices=["encrypt", "decrypt"], help="Action to perform: encrypt or decrypt")
     parser.add_argument("filename", help="Full path to the file to encrypt or decrypt")
 
-    args = parser.parse_args()
+# Check if no arguments were provided
+    if len(os.sys.argv) == 1:
+        parser.print_help()  
+        os.sys.exit(1) 
+
+    try:
+        args = parser.parse_args()
+    except SystemExit:
+        print("\nInvalid command or arguments provided.\n")
+        parser.print_help() 
+        os.sys.exit(1)
+    
 
     if args.action == "encrypt":
             encrypt_file(args.filename)
